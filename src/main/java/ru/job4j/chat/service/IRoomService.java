@@ -17,6 +17,7 @@ public interface IRoomService {
     List<Room> findAll();
     List<Room> findRoomByTitle(String title);
     Optional<Room> findRoomById(int id);
-    void joinToRoom(Person person, Room room);
+    int joinToRoom(Person person, Room room);
     void leaveRoom(Room room, Person person);
+    int findParticipant(Room room, Person person);
 }

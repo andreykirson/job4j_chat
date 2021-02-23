@@ -1,6 +1,7 @@
 package ru.job4j.chat.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Person {
     private Role role;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "participants",
             joinColumns =
@@ -45,5 +46,8 @@ public class Person {
     }
 
     public Person(int id) {
+    }
+
+    public Person(int i, String andrey, String s, String password, boolean b) {
     }
 }

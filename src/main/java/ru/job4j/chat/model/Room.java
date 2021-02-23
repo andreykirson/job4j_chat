@@ -27,8 +27,17 @@ public class Room {
     @JoinColumn(name = "creator_id")
     private Person creator;
 
-    @ManyToMany(mappedBy = "rooms")
+    @ManyToMany(mappedBy = "rooms", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Person> participants;
 
+    public Room(int id, String new_room, Date date) {
+    }
+
+    public Room(int id) {
+    }
+
+    public Room() {
+
+    }
 }

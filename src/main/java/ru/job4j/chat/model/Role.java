@@ -26,4 +26,10 @@ public class Role {
     @JsonIgnore
     private List<Person> person;
 
+    public Role(int i, String user) {
+    }
+
+    public Role() {
+
+    }
 }

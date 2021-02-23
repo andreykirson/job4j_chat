@@ -33,4 +33,10 @@ public class Message {
     )
     private Room room;
 
+    public Message(int i) {
+    }
+
+    public Message() {
+
+    }
 }

@@ -4,6 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.chat.model.Role;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * @author Andrey
  * @version 1
@@ -12,5 +15,9 @@ import ru.job4j.chat.model.Role;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Integer> {
-    Role findByRole(String role);
+    Optional<Role> findByRole(String role);
+    Optional<Role> findRoleById(int id);
+    List<Role> findAll();
+    Role save(Role role);
+    int deleteByRole(String role);
 }

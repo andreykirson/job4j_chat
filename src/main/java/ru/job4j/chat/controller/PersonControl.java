@@ -30,7 +30,7 @@ public class PersonControl {
 
     @GetMapping("/{id}")
     public Person getById( @PathVariable int id) {
-        return personService.findPersonById(id).orElse(null);
+        return personService.findPersonById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @GetMapping("/all")

@@ -57,12 +57,18 @@ public class RoomService implements IRoomService{
     }
 
     @Override
-    public void joinToRoom(Person person, Room room) {
-        roomRepository.addParticipant(person, room);
+    @Transactional
+    public int joinToRoom(Person person, Room room) {
+       return roomRepository.addParticipant(person, room);
     }
 
     @Override
     public void leaveRoom(Room room, Person person) {
         roomRepository.removeParticipantsByPerson(room, person);
+    }
+
+    @Override
+    public int findParticipant(Room room, Person person) {
+        return roomRepository.findByParticipant(room, person);
     }
 }

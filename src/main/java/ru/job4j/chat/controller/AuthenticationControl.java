@@ -53,19 +53,12 @@ public class AuthenticationControl {
         log.info("Start login rest controller");
         Map<Object, Object> response = new HashMap<>();
         try {
-            log.info("In try catch blog of Auth control");
             String email = requestDto.getEmail();
             String password = requestDto.getPassword();
             Optional<Person> person = personService.findPersonByEmail(email);
-            UserDetails userDetails = personDetailsService.loadUserByUsername(email);
-            userDetails.getAuthorities();
             JWTPerson jwtPerson = JWTPersonFactory.create(person.get());
-//            authenticationManager.authenticate();
-            log.info("The jwtPerson is {} ", jwtPerson.getAuthorities());
-            Authentication request = new UsernamePasswordAuthenticationToken(jwtPerson.getUsername(), jwtPerson.getPassword(), jwtPerson.getAuthorities());
-
-            log.info("In try catch blog of Auth control {} ", request);
-//            Authentication authResult = authenticationManager.authenticate(request);
+            log.info("The Authorities of jwtPerson is {} ", jwtPerson.getAuthorities());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtPerson.getUsername(), jwtPerson.getPassword(), jwtPerson.getAuthorities()));
              person = personService.findPersonByEmail(email);
             if (person.isEmpty()) {
                 throw new UsernameNotFoundException("Person with email: " + email + " not found");

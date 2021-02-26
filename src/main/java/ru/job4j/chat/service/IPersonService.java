@@ -19,5 +19,7 @@ public interface IPersonService {
     List<Person> findAll();
     void saveOrUpdate(Person person);
     void deletePerson(Person person);
-
+    Optional<Person> findPersonByEmail(String email);
+    Optional<Person> findPersonByEmailAndPassword(String email, String password);
+    Person registerPerson(Person person);
 }

@@ -1,54 +1,54 @@
-//package ru.job4j.chat.config;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import javax.sql.DataSource;
-//
-///**
-// * @author Andrey
-// * @version 1
-// * @date 2/19/2021
-// */
-//
-//public class WebSecurity extends WebSecurityConfigurerAdapter {
-//
-//    @Autowired
-//    DataSource dataSource;
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//                .usersByUsernameQuery("select name, password, enabled, email "
-//                        + "from persons "
-//                        + "where email = ?")
-//                .authoritiesByUsernameQuery(
-//                        "select p.email, r.authority "
-//                                + "from roles as r, persons as p "
-//                                + "where p.email = ? and p.authority_id = r.id");
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/login", "/reg")
-//                .permitAll()
-//                .antMatchers("/**")
-//                .hasAnyRole("ADMIN", "USER")
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error=true")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/login?logout=true")
-//                .invalidateHttpSession(true)
-//                .permitAll()
-//                .and()
-//                .csrf()
-//                .disable();
-//    }
-//}
+package ru.job4j.chat.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.context.annotation.Bean;
+import ru.job4j.chat.auth.JwtTokenProvider;
+import ru.job4j.chat.auth.filter.JwtConfigurer;
+
+
+/**
+ * @author Andrey
+ * @version 1
+ * @date 2/19/2021
+ */
+
+@Configuration
+public class WebSecurity extends WebSecurityConfigurerAdapter {
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private static final String ADMIN_ENDPOINT = "/chat/auth/admin/**";
+    private static final String LOGIN_ENDPOINT = "/chat/login";
+    private static final String SIGNUP_ENDPOINT = "/chat/sign-up";
+
+    @Autowired
+    public WebSecurity(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(SIGNUP_ENDPOINT).permitAll()
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .apply(new JwtConfigurer(jwtTokenProvider));
+    }
+}

@@ -1,6 +1,7 @@
 package ru.job4j.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.exception.ResourceNotFoundException;
 import ru.job4j.chat.model.Person;
@@ -19,6 +20,11 @@ public class PersonControl {
 
     @Autowired
     PersonService personService;
+
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody Person person) {
+        personService.registerPerson(person);
+    }
 
     @DeleteMapping
     public void deletePerson(@RequestParam int id) {

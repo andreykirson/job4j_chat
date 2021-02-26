@@ -1,7 +1,6 @@
 package ru.job4j.chat.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
@@ -26,9 +25,10 @@ public class Person {
     private String password;
     private boolean enabled;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany
+    @JoinTable(name = "person_roles", joinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -48,6 +48,6 @@ public class Person {
     public Person(int id) {
     }
 
-    public Person(int i, String andrey, String s, String password, boolean b) {
+    public Person(int id, String name, String email, String password, boolean b) {
     }
 }

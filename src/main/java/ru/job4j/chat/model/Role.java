@@ -22,14 +22,18 @@ public class Role {
     private int id;
     private String role;
 
-    @OneToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
-    private List<Person> person;
+    private List<Person> persons;
 
     public Role(int i, String user) {
     }
 
     public Role() {
 
+    }
+
+    public Role(String role) {
+        this.role = role;
     }
 }

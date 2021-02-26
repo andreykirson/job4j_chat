@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.model.Room;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Andrey
@@ -16,4 +17,6 @@ import java.util.List;
 public interface PersonRepository extends CrudRepository<Person, Integer> {
     List<Person> findAllByRooms(Room room);
     List<Person> findAll();
+    Optional<Person> findByEmail(String email);
+    Optional<Person> findByEmailAndPassword(String email, String password);
 }

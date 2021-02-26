@@ -2,11 +2,10 @@ package ru.job4j.chat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.job4j.chat.exception.PersonNotParticipantOfRoomException;
-import ru.job4j.chat.exception.ResourceNotFoundException;
 import ru.job4j.chat.model.Message;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.model.Room;
+import java.util.Optional;
 
 /**
  * @author Andrey
@@ -28,12 +27,19 @@ public class ChatService implements IChatService {
 
     @Override
     public boolean sendMessage(int roomId, int authorId, Message message) {
-        Person person = personService.findPersonById(authorId).orElseThrow(ResourceNotFoundException::new);
-        Room room = roomService.findRoomById(roomId).orElseThrow(ResourceNotFoundException::new);
-        if (roomService.findParticipant(room, person) != 0) {
-            message.setAuthor(person);
-            message.setRoom(room);
+        Optional<Person> person = personService.findPersonById(authorId);
+        if (person.isEmpty()) {
+            return false;
         }
+        Optional<Room> room = roomService.findRoomById(roomId);
+        if (room.isEmpty()) {
+            return false;
+        }
+        if (roomService.findParticipant(room.get(), person.get()) == 0) {
+            return false;
+        }
+        message.setAuthor(person.get());
+        message.setRoom(room.get());
         return messageService.saveOrUpdate(message) != null;
     }
 }

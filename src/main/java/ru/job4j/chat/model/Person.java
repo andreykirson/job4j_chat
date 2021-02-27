@@ -50,4 +50,15 @@ public class Person {
 
     public Person(int id, String name, String email, String password, boolean b) {
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

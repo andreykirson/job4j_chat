@@ -41,7 +41,7 @@ public class JWTPerson implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -62,10 +62,6 @@ public class JWTPerson implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override

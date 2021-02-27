@@ -23,7 +23,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     private static final String ADMIN_ENDPOINT = "/chat/auth/admin/**";
     private static final String LOGIN_ENDPOINT = "/chat/login";
-    private static final String SIGNUP_ENDPOINT = "/chat/sign-up";
+    private static final String SIGNUP_ENDPOINT = "/person/sign-up";
 
     @Autowired
     public WebSecurity(JwtTokenProvider jwtTokenProvider) {

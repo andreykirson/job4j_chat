@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,26 +51,20 @@ public class AuthenticationControl {
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
-        log.info("Start login rest controller");
-        Map<Object, Object> response = new HashMap<>();
         try {
             String email = requestDto.getEmail();
-            String password = requestDto.getPassword();
-            Optional<Person> person = personService.findPersonByEmail(email);
-            JWTPerson jwtPerson = JWTPersonFactory.create(person.get());
-            log.info("The Authorities of jwtPerson is {} ", jwtPerson.getAuthorities());
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtPerson.getUsername(), jwtPerson.getPassword(), jwtPerson.getAuthorities()));
-             person = personService.findPersonByEmail(email);
-            if (person.isEmpty()) {
-                throw new UsernameNotFoundException("Person with email: " + email + " not found");
-            } else {
-                String token = jwtTokenProvider.createToken(email, person.get().getRoles());
-                response.put("email", email);
-                response.put("token", token);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, requestDto.getPassword()));
+            Optional<Person> user = personService.findPersonByEmail(email);
+            if (user.isEmpty()) {
+                throw new UsernameNotFoundException("User with username: " + email + " not found");
             }
+            String token = jwtTokenProvider.createToken(email, user.get().getRoles());
+            Map<Object, Object> response = new HashMap<>();
+            response.put("username", email);
+            response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email or password");
+            throw new BadCredentialsException("Invalid username or password");
         }
     }
 }

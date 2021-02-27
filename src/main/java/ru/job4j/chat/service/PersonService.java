@@ -81,6 +81,7 @@ public class PersonService implements IPersonService {
         roles.add(role.orElseThrow(ResourceNotFoundException::new));
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRoles(roles);
+        person.setEnabled(true);
         Person registeredPerson = personRepository.save(person);
         log.info("IN register person : {} successfully registered", registeredPerson);
         return registeredPerson;

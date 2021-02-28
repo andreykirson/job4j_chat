@@ -68,7 +68,7 @@ class AuthenticationControlTest {
 
 
     @Test
-    public void shouldGenerateAuthToken() throws Exception {
+    public void shouldGenerateAuthToken() {
 
         Person p = new Person();
         p.setId(1);

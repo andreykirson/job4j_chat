@@ -35,23 +35,23 @@ class ChatServiceTest {
 
     @Test
     public void whenSendMessage() {
-//        Person p = new Person();
-//        p.setId(1);
-//        List<Person> personList = new ArrayList<>();
-//        personList.add(p);
+        Person p = new Person();
+        p.setId(1);
+        List<Person> personList = new ArrayList<>();
+        personList.add(p);
         Room r = new Room();
         r.setId(1);
-//        r.setCreator(p);
-//        Message msg = new Message();
-//        msg.setId(1);
-//        msg.setAuthor(p);
-//        msg.setRoom(r);
-//        Mockito.when(personService.findPersonById(p.getId())).thenReturn(Optional.of(p));
+        r.setCreator(p);
+        Message msg = new Message();
+        msg.setId(1);
+        msg.setAuthor(p);
+        msg.setRoom(r);
+        Mockito.when(personService.findPersonById(p.getId())).thenReturn(Optional.of(p));
         Mockito.when(roomService.findRoomById(r.getId())).thenReturn(Optional.of(r));
-//        Mockito.when(roomService.joinToRoom(p, r)).thenReturn(1);
-//        Mockito.when(roomService.findParticipant(r, p)).thenReturn(1);
-//        Mockito.when(messageService.saveOrUpdate(msg)).thenReturn(msg);
-//        assertTrue(chatService.sendMessage(r.getId(), p.getId(), msg));
+        Mockito.when(roomService.joinToRoom(p, r)).thenReturn(1);
+        Mockito.when(roomService.findParticipant(r, p)).thenReturn(1);
+        Mockito.when(messageService.saveOrUpdate(msg)).thenReturn(msg);
+        assertTrue(chatService.sendMessage(r.getId(), p.getId(), msg));
         assertEquals(roomService.findRoomById(r.getId()).get(), r);
     }
 

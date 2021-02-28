@@ -26,7 +26,7 @@ public class PersonControl {
         personService.registerPerson(person);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deletePerson(@RequestParam int id) {
         if (personService.findPersonById(id).isEmpty()) {
             throw new ResourceNotFoundException();

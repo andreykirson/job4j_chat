@@ -28,13 +28,13 @@ public class MessageControl {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping
+    @GetMapping("/allmsginroom")
     public List<Message> getAllMsgInRoom(@PathVariable int roomId) {
         Room room = roomService.findRoomById(roomId).orElseThrow(ResourceNotFoundException::new);
         return messageService.findMsgInRoom(room);
     }
 
-    @DeleteMapping("/{personId}/{roomId}/{msgId}")
+    @DeleteMapping("/{msgId}")
     public void deleteMsgByAuthorAndRoomAndMsgId(@PathVariable int personId, @PathVariable int roomId, @PathVariable int msgId) {
         Person person = personService.findPersonById(personId).orElseThrow(ResourceNotFoundException::new);
         Room room = roomService.findRoomById(roomId).orElseThrow(ResourceNotFoundException::new);

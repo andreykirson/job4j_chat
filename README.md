@@ -28,7 +28,7 @@ Create a new room by given person:
 
 POST http://localhost:8080/person/1/room
 
-{"title":  "new room", 
+{"title":  "new room", <br/>
 "createdDate": "2021-02-21T07:40:09.143+00:00"}
 
 ##### Send message by given person in given room:

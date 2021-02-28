@@ -30,13 +30,13 @@ class ChatServiceTest {
     @MockBean
     private PersonService personService;
 
-    @Autowired
+    @MockBean
     private RoomRepository roomRepository;
 
-    @MockBean
+    @Autowired
     private ChatService chatService;
 
-    @Autowired
+    @MockBean
     private MessageService messageService;
 
 
@@ -50,6 +50,7 @@ class ChatServiceTest {
         Room r = new Room();
         r.setId(1);
         r.setCreator(p);
+        r.setParticipants(personList);
         Message msg = new Message();
         msg.setId(1);
         msg.setAuthor(p);
@@ -59,7 +60,7 @@ class ChatServiceTest {
         Mockito.when(roomService.findRoomById(r.getId())).thenReturn(Optional.of(r));
         log.info("The found room is : {}", roomService.findRoomById(r.getId()));
         Mockito.when(roomService.joinToRoom(p, r)).thenReturn(1);
-        Mockito.when(roomService.findParticipant(r, p)).thenReturn(p);
+        Mockito.when(roomService.findParticipant(r, p)).thenReturn(Optional.of(p));
         log.info("The found participant is : {}", roomService.findParticipant(r, p));
         Mockito.when(messageService.saveOrUpdate(msg)).thenReturn(msg);
         assertTrue(chatService.sendMessage(1,1, msg));

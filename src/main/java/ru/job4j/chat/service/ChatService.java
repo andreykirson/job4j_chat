@@ -35,7 +35,8 @@ public class ChatService implements IChatService {
         if (room.isEmpty()) {
             return false;
         }
-        if (roomService.findParticipant(room.get(), person.get()) != null) {
+        Optional<Person> participant = roomService.findParticipant(room.get(), person.get());
+        if (participant.isEmpty()) {
             return false;
         }
         message.setAuthor(person.get());

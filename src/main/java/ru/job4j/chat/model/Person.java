@@ -52,6 +52,9 @@ public class Person {
     public Person(int id, String name, String email, String password, boolean b) {
     }
 
+    public Person(String name, String email, String password) {
+    }
+
     @Override
     public String toString() {
         return "Person{" +

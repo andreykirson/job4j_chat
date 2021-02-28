@@ -68,7 +68,12 @@ public class RoomService implements IRoomService{
     }
 
     @Override
-    public Person findParticipant(Room room, Person person) {
+    public Optional<Person> findParticipant(Room room, Person person) {
         return roomRepository.findByParticipant(room, person);
+    }
+
+    @Override
+    public List<Person> getAllParticipant() {
+        return roomRepository.findAllByParticipants();
     }
 }

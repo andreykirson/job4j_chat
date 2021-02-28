@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface PersonRepository extends CrudRepository<Person, Integer> {
     List<Person> findAllByRooms(Room room);
     List<Person> findAll();
+    Optional<Person> findPersonById(int id);
     Optional<Person> findByEmail(String email);
     Optional<Person> findByEmailAndPassword(String email, String password);
 }

@@ -19,5 +19,5 @@ public interface IRoomService {
     Optional<Room> findRoomById(int id);
     int joinToRoom(Person person, Room room);
     void leaveRoom(Room room, Person person);
-    int findParticipant(Room room, Person person);
+    Person findParticipant(Room room, Person person);
 }

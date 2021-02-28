@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -60,5 +61,28 @@ public class Person {
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Person person = (Person) o;
+        return id == person.id &&
+                enabled == person.enabled &&
+                Objects.equals(name, person.name) &&
+                Objects.equals(email, person.email) &&
+                Objects.equals(password, person.password) &&
+                Objects.equals(roles, person.roles) &&
+                Objects.equals(rooms, person.rooms);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, password, enabled, roles, rooms);
     }
 }

@@ -41,13 +41,13 @@ public class PersonService implements IPersonService {
 
     @Override
     public Optional<Person> findPersonById(int id) {
-        return personRepository.findById(id);
+        return personRepository.findPersonById(id);
     }
 
     @Override
     public List<Person> findAll() {
         List<Person> result = personRepository.findAll();
-        log.info("IN register findAll : {} persons were found", result.size());
+        log.info("In findAll : {} persons were found", result.size());
         return result;
     }
 

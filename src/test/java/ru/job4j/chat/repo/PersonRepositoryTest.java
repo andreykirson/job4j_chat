@@ -8,17 +8,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.model.Role;
-import ru.job4j.chat.model.Room;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @DataJpaTest
 @RunWith(SpringRunner.class)
-class RoomRepositoryTest {
-
-    @Autowired
-    private RoomRepository roomRepository;
+class PersonRepositoryTest {
 
     @Autowired
     private PersonRepository personRepository;
@@ -27,13 +23,7 @@ class RoomRepositoryTest {
     private RoleRepository roleRepository;
 
     @Test
-    void findRoomById() {
-    }
-
-    @Test
-    public void whenCreateRoom() {
-        Room room = new Room();
-        room.setTitle("new room");
+    public void whenCreatePerson() {
         Person person = new Person();
         Role role = new Role("Super user");
         List<Role> roles = new ArrayList<>();
@@ -41,9 +31,7 @@ class RoomRepositoryTest {
         roleRepository.save(role);
         person.setRoles(roles);
         personRepository.save(person);
-        room.setCreator(person);
-        roomRepository.save(room);
-        Assert.assertEquals(room, roomRepository.findById(room.getId()).orElse(new Room())
+        Assert.assertEquals(person, personRepository.findById(person.getId()).orElse(new Person())
         );
     }
 }

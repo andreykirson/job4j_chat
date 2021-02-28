@@ -68,7 +68,7 @@ public class RoomService implements IRoomService{
     }
 
     @Override
-    public int findParticipant(Room room, Person person) {
+    public Person findParticipant(Room room, Person person) {
         return roomRepository.findByParticipant(room, person);
     }
 }

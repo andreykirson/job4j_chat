@@ -3,6 +3,7 @@ package ru.job4j.chat.model;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Andrey
@@ -38,5 +39,26 @@ public class Message {
 
     public Message() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Message message = (Message) o;
+        return id == message.id &&
+                Objects.equals(content, message.content) &&
+                Objects.equals(createdDate, message.createdDate) &&
+                Objects.equals(author, message.author) &&
+                Objects.equals(room, message.room);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, createdDate, author, room);
     }
 }

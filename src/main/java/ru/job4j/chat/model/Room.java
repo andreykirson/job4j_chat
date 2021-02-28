@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Andrey
@@ -39,5 +40,26 @@ public class Room {
 
     public Room() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Room room = (Room) o;
+        return id == room.id &&
+                Objects.equals(title, room.title) &&
+                Objects.equals(createdDate, room.createdDate) &&
+                Objects.equals(creator, room.creator) &&
+                Objects.equals(participants, room.participants);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, createdDate, creator, participants);
     }
 }

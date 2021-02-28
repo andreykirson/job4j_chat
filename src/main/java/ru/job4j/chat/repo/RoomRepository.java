@@ -58,6 +58,6 @@ public interface RoomRepository extends CrudRepository<Room, Integer> {
     @Query( nativeQuery = true,
             value = "select * from persons p where id = (select person_id from participants where person_id = :person and room_id = :room)"
     )
-    int findByParticipant(Room room, Person person);
+    Person findByParticipant(Room room, Person person);
 
 }
